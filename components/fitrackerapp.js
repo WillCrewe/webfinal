@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Greeting from './Greeting'
 import History from './History'
 import Input from './Input'
-import InputFit from "./inputFit";
+import InputFit from "./InputFit";
 import BurnedHistory from './BurnedHistory';
 import InputInfo from './InputInfo';
 import { supabase } from '../utils/supabaseClient';
