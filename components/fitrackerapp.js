@@ -3,24 +3,50 @@ import Greeting from './Greeting'
 import History from './History'
 import Input from './Input'
 import InputFit from "./inputFit";
-import BurnedHistory from "./BurnedHistory";
+import BurnedHistory from './BurnedHistory';
+import InputInfo from './InputInfo';
 import { supabase } from '../utils/supabaseClient';
 
 export default function Fitrackerapp({ user }) {
 
     const [calorieentry, setCalorieEntry] = useState([]);
     const [calorieburned, setCalorieBurned] = useState([]);
+    const [userinfo, setUserInfo] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [totalCal, setTotalCal] = useState(0);
     const [burnedCal, setBurnedCal] = useState(0);
+    const [isUser, setUser] = useState(false);
+    const [goalDifference, setGoalDifference] = useState(0);
   
     useEffect(() => {
       setTotalCal(0)
       setBurnedCal(0)
+      fetchInfo()
       fetchBurned()
       fetchCalories()
     }, [loading])
+
+    const fetchInfo = async () => {
+      let { data: userinfo, error } = await supabase
+        .from('userinfo')
+        .select('entry')
+
+      if(!error) {
+        let arr3 = []
+        let val = userinfo[userinfo.length-1].entry
+        arr3.push(val)
+        console.log("USER INFO")
+        console.log(userinfo)
+        setUserInfo(arr3)
+        setGoalDifference(val)
+        setLoading(false)
+      } else {
+        console.log(error)
+        setLoading(false)
+        setError(error)
+      }
+    }
 
     const fetchBurned = async () => {
         let { data: calorieburned, error } = await supabase
@@ -28,7 +54,6 @@ export default function Fitrackerapp({ user }) {
         .select('entry, date_insert_ts')
 
         if(!error) {
-          console.log(calorieburned)
           let today2 = new Date()
           var date2 = today2.getFullYear()+'-'+(today2.getMonth()+1)+'-'+today2.getDate();
           let day2 = date2.substring(8,10)
@@ -57,13 +82,11 @@ export default function Fitrackerapp({ user }) {
         .select('entry, date_insert_ts')
 
         if (!error) {
-          console.log(calorieentry)
           let today = new Date()
           var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
           let day = date.substring(8,10)
           let arr = []
           for(let i = 0; i < calorieentry.length; i++) {
-            let record = calorieentry[i].date_insert_ts
             let s = calorieentry[i].date_insert_ts.substring(8,10)
             if(day == s) {
               arr.push(calorieentry[i])
@@ -111,6 +134,24 @@ export default function Fitrackerapp({ user }) {
         setLoading(false)
       }
     }
+
+    const addGoal = async (entry) => {
+      const { data, error } = await supabase
+        .from('userinfo')
+        .insert([
+          { id: user.id, entry: entry },
+      ])
+      setLoading(true)
+      setUser(false)
+      if (error) { 
+        console.log(error)
+        setUser(true)
+        setError(error) 
+      } else {
+        setLoading(false)
+      }
+    }
+
     if (loading) {
       return <p>Loading...</p>
     }
@@ -119,32 +160,49 @@ export default function Fitrackerapp({ user }) {
     }
   
     return (
-      <div className="bg-red-300 min-h-screen min-w-screen">
-        <main className="container mx-auto max-w-prose px-4 pt-12">
-        <div class="greeting">
-            <Greeting 
-              user = {user}
-            ></Greeting>
-        </div>
-          <p>Today's Calories Consumed: {totalCal}</p>
-          <Input 
-            handleSubmit = {addEntry}
-          >
-          </Input>
-          <History
-            calorieentry = { calorieentry }
-          ></History>
-          <p>Today's Calories Burned: {burnedCal}</p>
-          <InputFit
-            handleSubmit = { addBurned }
-          >
-          </InputFit>
-          <BurnedHistory
-            calorieburned={ calorieburned }
-          >
-          </BurnedHistory>
-          <p>Today's Calorie Difference: {totalCal - burnedCal}</p>
-        </main>
+      <div>
+          {
+            isUser ? (
+              <InputInfo
+                handleSubmit= { addGoal }
+              >
+              </InputInfo>
+            ) : (
+            <main>
+              <h1>FiTracker</h1>
+              <Greeting 
+                user = {user}
+              ></Greeting>
+              
+              <p>Calorie Goal: { userinfo }</p>
+              <p>Today's Calories Consumed: {totalCal}</p>
+              <Input 
+                handleSubmit = { addEntry }
+              >
+              </Input>
+              <History
+                calorieentry = { calorieentry }
+              ></History>
+              <p>Today's Calories Burned: { burnedCal }</p>
+              <InputFit
+                handleSubmit = { addBurned }
+              >
+              </InputFit>
+              <BurnedHistory
+                calorieburned={ calorieburned }
+              >
+              </BurnedHistory>
+              <p>Today's Calorie Difference: {totalCal - burnedCal}</p>
+              {
+                goalDifference >= totalCal - burnedCal ? (
+                  <p>You are meeting your daily goal! You are currently: {goalDifference - (totalCal - burnedCal)} calories below!</p>
+                ) : (
+                  <p>You are above your daily goal by {(goalDifference - (totalCal - burnedCal))*-1} calories. Try to go burn that off!</p>
+                )
+              }
+            </main>
+          )
+        }
         <style jsx>{`
               div {
                 display: flex;
@@ -156,6 +214,13 @@ export default function Fitrackerapp({ user }) {
               p {
                 display: flex;
                 justify-content: center;
+              }
+
+              h1 {
+                display: flex;
+                justify-content: center;
+                font-size: 5rem;
+                margin-bottom: 10px;
               }
             `}</style>
       </div>

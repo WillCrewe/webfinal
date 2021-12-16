@@ -1,6 +1,4 @@
 export default function History({ calorieentry }) {
-    console.log("History arr")
-    console.log(calorieentry)
     return (
         <div>
             {
