@@ -13,7 +13,7 @@ export default function Home() {
         <title>My Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="container mx-auto max-w-prose px-4 pt-12">
+      <body className="container mx-auto max-w-prose px-4 pt-12">
       {
           user ? (
             <div className="container mx-auto max-w-prose px-4">
@@ -38,9 +38,10 @@ export default function Home() {
           </div>
           )
         }
-      </main>
+      </body>
       <style jsx>{`
-              main {
+              body {
+                background: #0B0A0A;
                 display: flex;
                 justify-content: center;
                 padding: 0px;
@@ -49,6 +50,11 @@ export default function Home() {
 
               button {
                 width: 100%;
+                color: white;
+                background-color: #10B203;
+                border-radius: 0px 0px 20px 20px;
+                border-color: #10B203;
+                overflow-wrap: normal;
               }
             `}</style>
     </div>

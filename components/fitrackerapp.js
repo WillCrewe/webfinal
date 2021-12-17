@@ -207,20 +207,29 @@ export default function Fitrackerapp({ user }) {
               div {
                 display: flex;
                 justify-content: center;
-                padding: 0px;
+                padding: 10px;
                 margin: 0px;
+                max-width: 450px;
+                border-style: solid;
+                border-radius: 20px 20px 0px 0px;
+                border-color: #10B203;
+                overflow-wrap: normal;
               }
 
               p {
                 display: flex;
                 justify-content: center;
+                color: white;
+                overflow-wrap: normal;
               }
 
               h1 {
                 display: flex;
                 justify-content: center;
                 font-size: 5rem;
-                margin-bottom: 10px;
+                margin-bottom: 0;
+                color: #10B203;
+                font-weight: bold;
               }
             `}</style>
       </div>

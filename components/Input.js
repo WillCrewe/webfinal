@@ -33,6 +33,18 @@ export default function Input ({ handleSubmit }) {
                 display: flex;
                 justify-content: center;
               }
+
+              input {
+                border-radius: 10px 0px 0px 10px;
+                border-color: #10B203;
+                overflow-wrap: normal;
+              }
+
+              button {
+                border-radius: 0px 10px 10px 0px;
+                border-color: #10B203;
+                overflow-wrap: normal;
+              }
             `}</style>
         </form>
     )

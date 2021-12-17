@@ -10,8 +10,13 @@ export default function BurnedHistory({ calorieburned }) {
             }
             <style jsx>{`
                 div {
-                display: flex;
-                justify-content: center;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                p {
+                    color: white;
+                    overflow-wrap: normal;
                 }
             `}</style>
         </div>

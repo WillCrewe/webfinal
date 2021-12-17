@@ -9,6 +9,11 @@ export default function Greeting({user, calorieEntries}) {
                 display: flex;
                 justify-content: center;
               }
+
+              h1 {
+                  color: white;
+                  margin-bottom: 0px;
+              }
             `}</style>
         </div>
     )
