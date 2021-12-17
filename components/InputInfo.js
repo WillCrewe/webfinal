@@ -18,20 +18,32 @@ export default function Input ({ handleSubmit }) {
     return (
         <form onSubmit={submitForm}>
             <input 
-                placeholder = "Enter Daily Calorie Goal"
+                placeholder = "Enter Today's Calorie Goal"
                 type="text" 
                 value={value}
-                className="rounded px-5 py-3 my-3 w-3/5"
                 onChange={(e) => setValue(e.target.value)}
             >
             </input>
-            <button type="submit" className="bg-indigo-300 rounded px-12 py-2 mx-3 w-48 text-white">
+            <button type="submit">
                 Save
             </button>
             <style jsx>{`
               form {
                 display: flex;
                 justify-content: center;
+                margin-top: 50px;
+              }
+
+              input {
+                border-radius: 10px 0px 0px 10px;
+                border-color: #10B203;
+                overflow-wrap: normal;
+              }
+
+              button {
+                border-radius: 0px 10px 10px 0px;
+                border-color: #10B203;
+                overflow-wrap: normal;
               }
             `}</style>
         </form>

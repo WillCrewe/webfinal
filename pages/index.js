@@ -8,22 +8,21 @@ import React, { useEffect, useState } from "react";
 export default function Home() {
   const { user } = Auth.useUser()
   return (
-    <div className="bg-red-300 min-h-screen min-w-screen">
+    <div>
       <Head>
-        <title>My Page</title>
+        <title>FiTracker</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <body className="container mx-auto max-w-prose px-4 pt-12">
+      <body>
       {
           user ? (
-            <div className="container mx-auto max-w-prose px-4">
-              <div id="spacer" className="h-12"/>
+            <div>
+              <div id="spacer"/>
               <Fitrackerapp
                 user={user}
               >
               </Fitrackerapp>
               <button
-                className="text-blue-300 font-semibold"
                 onClick={async () => {
                   const { error } = await supabase.auth.signOut()
                   if (error) console.log('Error logging out:', error.message)
@@ -33,7 +32,7 @@ export default function Home() {
             </button>
           </div>
           ) : (
-            <div className="bg-white">
+            <div>
             <Auth supabaseClient={supabase} socialLayout="horizontal" socialButtonSize="xlarge"></Auth>
           </div>
           )

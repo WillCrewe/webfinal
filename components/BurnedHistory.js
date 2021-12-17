@@ -3,9 +3,9 @@ export default function BurnedHistory({ calorieburned }) {
         <div>
             {
                 calorieburned.length > 0 ? (
-                    <p className="text-white text-2xl">Calories Burned Today: <span className="font-bold">{calorieburned.map(g => ' ' + g.entry)}</span></p>
+                    <p>Calories Burned Today: <span>{calorieburned.map(g => ' ' + g.entry)}</span></p>
                 ) : (
-                    <p className="text-white text-2xl">No Calories Burned Today</p>
+                    <p>No Calories Burned Today</p>
                 )
             }
             <style jsx>{`

@@ -21,14 +21,14 @@ export default function InputFit ({ handleSubmit }) {
                 placeholder = "Enter Calories Burned"
                 type="text" 
                 value={value}
-                className="rounded px-5 py-3 my-3 w-3/5"
                 onChange={(e) => setValue(e.target.value)}
             >
             </input>
-            <button type="submit" className="bg-indigo-300 rounded px-12 py-2 mx-3 w-48 text-white">
+            <button type="submit">
                 Save
             </button>
             <style jsx>{`
+            
               form {
                 display: flex;
                 justify-content: center;

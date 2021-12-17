@@ -16,7 +16,7 @@ export default function Fitrackerapp({ user }) {
     const [error, setError] = useState(null);
     const [totalCal, setTotalCal] = useState(0);
     const [burnedCal, setBurnedCal] = useState(0);
-    const [isUser, setUser] = useState(false);
+    const [isUser, setUser] = useState(true);
     const [goalDifference, setGoalDifference] = useState(0);
   
     useEffect(() => {
@@ -30,16 +30,28 @@ export default function Fitrackerapp({ user }) {
     const fetchInfo = async () => {
       let { data: userinfo, error } = await supabase
         .from('userinfo')
-        .select('entry')
+        .select('entry, date_insert_ts')
 
       if(!error) {
         let arr3 = []
-        let val = userinfo[userinfo.length-1].entry
-        arr3.push(val)
+        let today3 = new Date()
+        var date3 = today3.getFullYear()+'-'+(today3.getMonth()+1)+'-'+today3.getDate();
+        let day3 = date3.substring(8,10)
         console.log("USER INFO")
         console.log(userinfo)
+        for(let k = 0; k < userinfo.length; k++) {
+          let num = userinfo[k].date_insert_ts.substring(8,10)
+          if(day3 == num) {
+            arr3.push(userinfo[k].entry)
+            setUserInfo(arr3)
+            setUser(false)
+          } else {
+            console.log("FOR SOME REASON IT DO BE HERE")
+            setUser(true)
+          }
+        }
         setUserInfo(arr3)
-        setGoalDifference(val)
+        setGoalDifference(arr3)
         setLoading(false)
       } else {
         console.log(error)
@@ -163,10 +175,16 @@ export default function Fitrackerapp({ user }) {
       <div>
           {
             isUser ? (
-              <InputInfo
-                handleSubmit= { addGoal }
-              >
-              </InputInfo>
+            <span>
+                <Greeting 
+                user = {user}
+                ></Greeting>
+
+                <InputInfo
+                  handleSubmit= { addGoal }
+                >
+                </InputInfo>
+              </span>
             ) : (
             <main>
               <h1>FiTracker</h1>
