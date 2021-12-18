@@ -1,34 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Final Project 
+CPSCP 458
 
-## Getting Started
+Website Description:
+Authorization page - Users can sign up and login (does not need email verification)
+Once on the site, user will input their "Today's Calorie Goal" which is the goal for calories consumed - calories burned (If the user has not already done that today)
+The value is added to the database with a date value to check if they have entered today
 
-First, run the development server:
+After that, the user is met with the main page
+Main page shows a welcome, with the users email.
+Shows their calorie goal for the day.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Shows their total calories consumed for the day with an input field allowing the user to input more entries
+Shows their total calories burned for the day with an input field allowing the user to input more entries
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Shows their previously entered values for both consumed and burned
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Only accepts integer values for the input fields, will do nothing if a non integer was entered. 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Calculates the total calorie difference of calories consumed - calories burned and compares that to the goal
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Has a logout button at the bottom.
 
-## Learn More
+Only issue I have run into with the website is the time difference between supabase and client time.
+So if you are attempting to enter values and you do not see them around 3pm and later, they are being entered for the next day.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+I could not figure out how to fix this issue, it is the current only known bug I have with my code. 
